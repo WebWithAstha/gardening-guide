@@ -1,63 +1,85 @@
-import React from 'react'
-import plant_png from "../assets/images/plants-deco.png"
+import React, { useContext } from 'react'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
+import { plancontext } from '../Contexts/PlanContent.jsx'
 
 
 const Plan = () => {
-    return (
-        <>
-            <div className='w-full bg-zinc-200/[0] py-10'>
-                <div className="top bg-[#66a166]/[0] gap-20 flex items-center px-10">
-                    <div className="img bg-[#919591] w-max rounded-full">
-                        <img className='h-full w-80' src="https://i.ibb.co/1dNdxZm/pngegg-2.png" alt="" />
-                    </div>
-                    <div className="about">
-                        <h1 className='text-4xl mb-4 text-[#6a796a]'>Spring Garden Blossoms</h1>
+    const [plans, setplans] = useContext(plancontext)
+    const { id } = useParams()
+    const plan = plans.find(plan => plan.id === id)
+    const navigate = useNavigate()
 
-                        <div className="boxes flex gap-6 items-center">
-                            <div className="box w-32 h-28 flex flex-col gap-2 items-center rounded-lg px-6 bg-emerald-100 p-4">
-                                <i className="ri-sun-fill text-yellow-400 text-4xl"></i>
-                                <h1 className='bg-emerald-200 w-full text-center rounded-md'>Full</h1>
+    const deleteHandler = () => {
+        const newplans = plans.filter(plan => plan.id !== id)
+        setplans([...newplans])
+        localStorage.setItem('plans', JSON.stringify([...newplans]));
+        navigate('/plans')
+
+    }
+
+
+
+    return (plan ?
+        <div className='w-full bg-zinc-200/[0]'>
+            <div className="top bg-[#919591]/[0] py-10 md:gap-20 gap-8 flex md:flex-row flex-col items-center md:px-10">
+                <div className="img bg-[#919591] w-max rounded-full">
+                    <img className='h-full w-80' src={plan.planimg} alt="" />
+                </div>
+                <div className="about">
+                    <h1 className='md:text-4xl text-3xl text-center md:text-start md:mb-4 mb-10 text-[#6a796a]'>{plan.planname}</h1>
+
+                    <div className="boxes flex gap-6 items-center md:flex-row flex-col md:px-0 px-10">
+                        <div className="flex items-center gap-6 w-full md:w-max">
+                            <div className="box md:w-32 w-[50%] h-28 flex flex-col gap-2 items-center rounded-lg px-6 bg-yellow-700/[.6] p-4">
+                                <i className="ri-sun-fill text-yellow-100 text-4xl"></i>
+                                <h1 className='text-yellow-100 font-bold w-full text-center rounded-md capitalize'>{plan.plansunlight}</h1>
                             </div>
-                            <div className="box w-32 h-28 flex flex-col gap-2 items-center rounded-lg px-6 bg-amber-100 p-4">
-                                <i className="ri-drop-fill text-blue-400 text-3xl"></i>
-                                <h1 className='bg-yellow-200 w-full text-center rounded-md'>Full</h1>
-                            </div>
-                            <div className="box min-w-32 h-28 flex flex-col gap-2 items-center rounded-lg px-6 bg-pink-100 p-4">
-                                <i className="ri-flower-fill text-pink-600 text-3xl"></i>
-                                <ul className='flex'>
-                                    <li className='list-disc mx-4'>Rose</li>
-                                    <li className='list-disc mx-4'>Tulip</li>
-                                    <li className='list-disc mx-4'>Lavender</li>
-                                    <li className='list-disc mx-4'>Sunflowers</li>
-                                </ul>
+                            <div className="box md:w-32 w-[50%] h-28 flex flex-col gap-2 items-center rounded-lg px-6 bg-blue-900/[.6] p-4">
+                                <i className="ri-drop-fill text-blue-100 text-3xl"></i>
+                                <h1 className='text-blue-100 font-bold w-full text-center rounded-md capitalize'>{plan.planwater}</h1>
                             </div>
                         </div>
-                        <p className='mt-4 w-[60%] leading-tight text-sm'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita ab aliquam, nisi quia minus velit omnis nam. Ad, repudiandae quasi.</p>
+                        <div className="box md:min-w-32 w-full md:h-28 flex flex-col gap-2 items-center rounded-lg px-6 bg-neutral-400 p-4">
+                            <i className="ri-flower-fill text-neutral-200 text-3xl"></i>
+                            <ul className='flex md:flex-row flex-col items-center'>
+                                {plan.planplants.split(',').map((plant, i) => {
+                                    return (
+                                        <li key={i} className='md:mx-4 font-bold text-neutral-100'>{plant}</li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
                     </div>
+                    <h4 className='text-[#6a796a] md:px-0 px-10 mt-4 mb-1 leading-tight text-sm'>Description ~</h4>
+                    <p className='md:w-[60%] md:px-0 px-10 leading-tight text-sm'>{plan.plandesc}</p>
+                    <div className="btns px-10 md:px-0 flex items-center w-full md:justify-start justify-between gap-4 md:mt-4 mt-10">
+                        <NavLink to={`/update/${id}`}>
 
-                </div>
-                <div className="desc px-20 mt-20">
-                    <h1 className='text-[#6a796a] text-2xl mb-4 border-b border-[#6a796a] '>Planting Instruction</h1>
-                    <ul className=' list-decimal pl-4'>
-                        <li>Enrich soil with compost.</li>
-                        <li>Plant seeds in trays, water, and cover.</li>
-                        <li>Harden off, then plant outdoors.</li>
-                        <li>Apply mulch, water regularly. </li>
-                        <li>Monitor, deadhead, and fertilize monthly.</li>
-                    </ul>
-                    <h1 className='text-[#6a796a] text-2xl mb-4 mt-8 border-b border-[#6a796a] '>Care Tips</h1>
-                    <ul className=' list-decimal pl-4'>
-                        <li>Enrich soil with compost.</li>
-                        <li>Plant seeds in trays, water, and cover.</li>
-                        <li>Harden off, then plant outdoors.</li>
-                        <li>Apply mulch, water regularly. </li>
-                        <li>Monitor, deadhead, and fertilize monthly.</li>
-                    </ul>
-
+                            <button className='px-4 py-1.5 rounded text-[#6a796a] border border-[#6a796a] font-bold uppercase'>Update</button>
+                        </NavLink>
+                        <button onClick={deleteHandler} className='px-4 py-1.5 rounded text-rose-500  border border-rose-500 font-bold uppercase'>Delete</button>
+                    </div>
                 </div>
 
             </div>
-        </>
+            <div className="desc md:px-20 px-10 md:mt-20 md:pb-0 pb-10">
+                <h1 className='text-[#6a796a] text-2xl mb-4 border-b border-[#6a796a] '>Planting Instruction</h1>
+                <ul className=' list-decimal pl-4'>
+                    {plan.planinstructions.split('.').map((instruct, i, len) => {
+                        return (
+                            i != len.length - 1 ? <li key={i}>{instruct}.</li> : ''
+                        )
+                    })}
+                </ul>
+                <h1 className='text-[#6a796a] text-2xl mb-4 mt-8 border-b border-[#6a796a] '>Care Tips</h1>
+                <h1 className=''>{plan.plantips}</h1>
+
+
+            </div>
+
+        </div>
+        :
+        <h1>No such plan.</h1>
     )
 }
 

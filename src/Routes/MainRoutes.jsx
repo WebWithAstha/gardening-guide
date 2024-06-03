@@ -7,6 +7,7 @@ import Plan from '../components/Plan.jsx'
 import About from '../components/About.jsx'
 import Contact from '../components/Contact.jsx'
 import Error from '../components/Error.jsx'
+import Update from '../components/Update.jsx'
 
 const MainRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const MainRoutes = () => {
         <Route path="/plans" element={<Plans/>}/>
         <Route path="/plan/:id" element={<Plan/>}/>
         <Route path="/create" element={<Create/>}/>
+        <Route path="/update/:id" element={<Update/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path="/contact" element={<Contact/>}/>
         <Route path="/*" element={<Error/>}/>

@@ -1,23 +1,30 @@
 import React, { useContext, useState } from 'react'
 import { plancontext } from '../Contexts/PlanContent'
-import { nanoid } from 'nanoid'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
 
-const Create = () => {
-    const [plans,setplans] = useContext(plancontext)
-    const [planname, setplanname] = useState('')
-    const [planimg, setplanimg] = useState('')
-    const [planbgimg, setplanbgimg] = useState('')
-    const [plandesc, setplandesc] = useState('')
-    const [planplants, setplanplants] = useState('')
-    const [planinstructions, setplaninstructions] = useState('')
-    const [plantips, setplantips] = useState('')
-    const [plansunlight, setplansunlight] = useState('moderate')
-    const [planwater, setplanwater] = useState('partial')
 
-    const submitHandler =(e)=>{
+const Update = () => {
+    const { id } = useParams()
+    const navigate = useNavigate()
+
+    const [plans, setplans] = useContext(plancontext)
+    const plan = plans.find(plan => plan.id === id)
+
+
+    const [planname, setplanname] = useState(plan.planname)
+    const [planimg, setplanimg] = useState(plan.planimg)
+    const [planbgimg, setplanbgimg] = useState(plan.planbgimg)
+    const [plandesc, setplandesc] = useState(plan.plandesc)
+    const [planplants, setplanplants] = useState(plan.planplants)
+    const [planinstructions, setplaninstructions] = useState(plan.planinstructions)
+    const [plantips, setplantips] = useState(plan.plantips)
+    const [plansunlight, setplansunlight] = useState(plan.plansunlight)
+    const [planwater, setplanwater] = useState(plan.planwater)
+
+    const submitHandler = (e) => {
         e.preventDefault();
-        const newPlan = {
-            id:nanoid(),
+        const updatedPlan = {
+            id: plan.id,
             planname,
             planimg,
             planbgimg,
@@ -28,25 +35,25 @@ const Create = () => {
             plansunlight,
             planwater
         }
-        setplans([...plans,newPlan]);
-        localStorage.setItem('plans', JSON.stringify([...plans,newPlan]));
-        setplanname('');
-        setplanimg('');
-        setplanbgimg('');
-        setplandesc('');
-        setplanplants('');
-        setplaninstructions('');
-        setplantips('');
-        setplansunlight('moderate');
-        setplanwater('partial');
+        const copyplans = [...plans]
+        const index = copyplans.findIndex(plan => plan.id === id)
+        copyplans[index] = updatedPlan;
+        setplans(copyplans);
+        // alternate approach // setplans(plans =>plans.map(plan=>plan.id===id?updatedPlan:plan));
+
+        localStorage.setItem('plans', JSON.stringify(copyplans));
+        navigate(`/plan/${id}`)
     }
 
     return (
         <>
             {/* drop-shadow-[0_0px_3px_#1b5191] */}
+            <NavLink to={`/plan/${id}`}>
+                <i className='ri-arrow-left-line px-4 py-1.5 rounded mt-6 bg-[#6a796a] inline-block text-white border border-[#6a796a] font-bold uppercase md:mx-20 mx-10'></i>
+            </NavLink>
             <form onSubmit={submitHandler} className="w-[70%] m-auto  pb-5">
                 <h1 className="text-7xl mt-5 font-extrabold text-[#1b5191] mb-[5%]">
-                    Create New <br />Garden Plan
+                    Update <br />Garden Plan
                 </h1>
                 <input
                     onChange={e => setplanimg(e.target.value)}
@@ -94,13 +101,13 @@ const Create = () => {
                     placeholder="Planting tips -> 'use comma to seperate tips'..."
                 ></textarea>
                 <label className='text-sm' htmlFor="Water">Water Needs :</label>
-                <select value={plansunlight} onChange={e=>setplansunlight(e.target.value)} className="w-full border mt-2 border-[#1b5191] rounded-md px-6 py-3 text-lg mb-5" id="">
+                <select value={plansunlight} onChange={e => setplansunlight(e.target.value)} className="w-full border mt-2 border-[#1b5191] rounded-md px-6 py-3 text-lg mb-5" id="">
                     <option className=' text-zinc-400' value="light">Light (Less than 1 inch/week)</option>
                     <option className=' text-zinc-400' value="moderate">Moderate (1 inch/week) </option>
                     <option className=' text-zinc-400' value="heavy">Heavy (More than 1 inch/week)</option>
                 </select>
                 <label className='text-sm' htmlFor="sunlight">Sunlight Needs :</label>
-                <select value={planwater} onChange={e=>setplanwater(e.target.value)} className="w-full border mt-2 border-[#1b5191] rounded-md px-6 py-3 text-lg mb-5" id="">
+                <select value={planwater} onChange={e => setplanwater(e.target.value)} className="w-full border mt-2 border-[#1b5191] rounded-md px-6 py-3 text-lg mb-5" id="">
                     <option className=' text-zinc-400' value="full">Full Sun (6-8 hours/day)</option>
                     <option className=' text-zinc-400' value="partial">Partial Sun (4-6 hours/day)</option>
                     <option className=' text-zinc-400' value="shade">Shade (Less than 4 hours/day)</option>
@@ -116,4 +123,4 @@ const Create = () => {
     )
 }
 
-export default Create
+export default Update
