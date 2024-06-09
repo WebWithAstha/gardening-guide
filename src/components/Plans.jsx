@@ -19,7 +19,10 @@ const Plans = () => {
                         </NavLink>
                     )
                 }): 
-                <h1 className='text-[#6a796a]'>No Plans</h1>
+               
+                <div className='text-center text-[#919591] font-black text-3xl'>No plans <i className="ri-emotion-happy-line"></i></div>
+
+
                 }
 
                 
