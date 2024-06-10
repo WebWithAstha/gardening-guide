@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom'
 
 
 const Layout = () => {
+    
+
     return (
         <div className='w-full md:h-[65vh] h-[95vh] relative flex items-center justify-center md:p-10 p-8'>
 

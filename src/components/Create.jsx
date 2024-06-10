@@ -1,9 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { plancontext } from '../Contexts/PlanContent'
 import { nanoid } from 'nanoid'
+import { useDispatch } from 'react-redux'
+import { asyncAdd } from '../store/actions/gardenPlanAction'
+import { useNavigate } from 'react-router-dom'
 
 const Create = () => {
-    const [plans,setplans] = useContext(plancontext)
+    const [plans, setplans] = useContext(plancontext)
     const [planname, setplanname] = useState('')
     const [planimg, setplanimg] = useState('')
     const [planbgimg, setplanbgimg] = useState('')
@@ -13,11 +16,16 @@ const Create = () => {
     const [plantips, setplantips] = useState('')
     const [plansunlight, setplansunlight] = useState('moderate')
     const [planwater, setplanwater] = useState('partial')
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
-    const submitHandler =(e)=>{
+    
+    
+    
+    const submitHandler = (e) => {
         e.preventDefault();
         const newPlan = {
-            id:nanoid(),
+            id: nanoid(),
             planname,
             planimg,
             planbgimg,
@@ -28,8 +36,10 @@ const Create = () => {
             plansunlight,
             planwater
         }
-        setplans([...plans,newPlan]);
-        localStorage.setItem('plans', JSON.stringify([...plans,newPlan]));
+        dispatch(asyncAdd(newPlan))
+        // dispatch(add(newPlan))
+        // setplans([...plans,newPlan]);
+        localStorage.setItem('plans', JSON.stringify([...plans, newPlan]));
         setplanname('');
         setplanimg('');
         setplanbgimg('');
@@ -39,6 +49,8 @@ const Create = () => {
         setplantips('');
         setplansunlight('moderate');
         setplanwater('partial');
+        navigate('/')
+
     }
 
     return (
@@ -94,13 +106,13 @@ const Create = () => {
                     placeholder="Planting tips -> 'use comma to seperate tips'..."
                 ></textarea>
                 <label className='text-sm' htmlFor="Water">Water Needs :</label>
-                <select value={plansunlight} onChange={e=>setplansunlight(e.target.value)} className="w-full border mt-2 border-[#1b5191] rounded-md px-6 py-3 text-lg mb-5" id="">
+                <select value={plansunlight} onChange={e => setplansunlight(e.target.value)} className="w-full border mt-2 border-[#1b5191] rounded-md px-6 py-3 text-lg mb-5" id="">
                     <option className=' text-zinc-400' value="light">Light (Less than 1 inch/week)</option>
                     <option className=' text-zinc-400' value="moderate">Moderate (1 inch/week) </option>
                     <option className=' text-zinc-400' value="heavy">Heavy (More than 1 inch/week)</option>
                 </select>
                 <label className='text-sm' htmlFor="sunlight">Sunlight Needs :</label>
-                <select value={planwater} onChange={e=>setplanwater(e.target.value)} className="w-full border mt-2 border-[#1b5191] rounded-md px-6 py-3 text-lg mb-5" id="">
+                <select value={planwater} onChange={e => setplanwater(e.target.value)} className="w-full border mt-2 border-[#1b5191] rounded-md px-6 py-3 text-lg mb-5" id="">
                     <option className=' text-zinc-400' value="full">Full Sun (6-8 hours/day)</option>
                     <option className=' text-zinc-400' value="partial">Partial Sun (4-6 hours/day)</option>
                     <option className=' text-zinc-400' value="shade">Shade (Less than 4 hours/day)</option>
