@@ -4,9 +4,10 @@ import { nanoid } from 'nanoid'
 import { useDispatch } from 'react-redux'
 import { asyncAdd } from '../store/actions/gardenPlanAction'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const Create = () => {
-    const [plans, setplans] = useContext(plancontext)
+    // const [plans, setplans] = useContext(plancontext)
     const [planname, setplanname] = useState('')
     const [planimg, setplanimg] = useState('')
     const [planbgimg, setplanbgimg] = useState('')
@@ -37,9 +38,7 @@ const Create = () => {
             planwater
         }
         dispatch(asyncAdd(newPlan))
-        // dispatch(add(newPlan))
-        // setplans([...plans,newPlan]);
-        localStorage.setItem('plans', JSON.stringify([...plans, newPlan]));
+        // localStorage.setItem('plans', JSON.stringify([...plans, newPlan]));
         setplanname('');
         setplanimg('');
         setplanbgimg('');
@@ -49,6 +48,7 @@ const Create = () => {
         setplantips('');
         setplansunlight('moderate');
         setplanwater('partial');
+        toast.success('Garden planned successfully')
         navigate('/')
 
     }

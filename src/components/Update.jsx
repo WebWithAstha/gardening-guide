@@ -2,16 +2,21 @@ import React, { useContext, useState } from 'react'
 import { plancontext } from '../Contexts/PlanContent'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { asyncUpdate } from '../store/actions/gardenPlanAction'
 
 
 const Update = () => {
-    
+
     const { id } = useParams()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     
-    const [plans, setplans] = useContext(plancontext)
+    const {plans} = useSelector(store=>store.gardenPlanSlice)
+    // const [plans, setplans] = useContext(plancontext)
+
     const plan = plans.find(plan => plan.id === id)
-    
+
 
     const [planname, setplanname] = useState(plan.planname)
     const [planimg, setplanimg] = useState(plan.planimg)
@@ -22,7 +27,7 @@ const Update = () => {
     const [plantips, setplantips] = useState(plan.plantips)
     const [plansunlight, setplansunlight] = useState(plan.plansunlight)
     const [planwater, setplanwater] = useState(plan.planwater)
-    
+
     const submitHandler = (e) => {
         e.preventDefault();
         const updatedPlan = {
@@ -36,18 +41,19 @@ const Update = () => {
             plantips,
             plansunlight,
             planwater
-            }
-        const copyplans = [...plans]
-        const index = copyplans.findIndex(plan => plan.id === id)
-        copyplans[index] = updatedPlan;
-        setplans(copyplans);
-        // alternate approach // setplans(plans =>plans.map(plan=>plan.id===id?updatedPlan:plan));
-
-        localStorage.setItem('plans', JSON.stringify(copyplans));
-        navigate(`/plan/${id}`)
-        toast.success('Plans updated successfully');
         }
+        const index = plans.findIndex(plan => plan.id === id)
+        // const copyplans = [...plans]
+        // copyplans[index] = updatedPlan;
+        // setplans(copyplans);
+        // // alternate approach // setplans(plans =>plans.map(plan=>plan.id===id?updatedPlan:plan));
+        // localStorage.setItem(' plans', JSON.stringify(copyplans));
         
+        dispatch(asyncUpdate(updatedPlan, index))
+        navigate(`/plan/${id}`)
+        toast.success('Plan updated successfully');
+    }
+
     return (
         <>
             {/* drop-shadow-[0_0px_3px_#1b5191] */}

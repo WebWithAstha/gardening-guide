@@ -1,18 +1,28 @@
 import React, { useContext } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
 import { plancontext } from '../Contexts/PlanContent.jsx'
+import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { asyncRemove } from '../store/actions/gardenPlanAction.jsx'
 
 
 const Plan = () => {
-    const [plans, setplans] = useContext(plancontext)
+    // const [plans, setplans] = useContext(plancontext)
+    const {plans}= useSelector(store=>store.gardenPlanSlice)
+
     const { id } = useParams()
     const plan = plans.find(plan => plan.id === id)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const deleteHandler = () => {
-        const newplans = plans.filter(plan => plan.id !== id)
-        setplans([...newplans])
-        localStorage.setItem('plans', JSON.stringify([...newplans]));
+
+        dispatch(asyncRemove(id))
+
+        // const newplans = plans.filter(plan => plan.id !== id)
+        // setplans([...newplans])
+        // localStorage.setItem('plans', JSON.stringify([...newplans]));
+        toast.success("Plans deleted successfully")
         navigate('/plans')
 
     }
@@ -26,7 +36,7 @@ const Plan = () => {
                     <img className='h-full w-80' src={plan.planimg} alt="" />
                 </div>
                 <div className="about">
-                    <h1 className='md:text-4xl text-3xl text-center md:text-start md:mb-4 mb-10 text-[#6a796a]'>{plan.planname}</h1>
+                    <h1 className='md:text-6xl text-3xl text-center md:text-start md:mb-8 mb-10 text-[#6a796a]'>{plan.planname}</h1>
 
                     <div className="boxes flex gap-6 items-center md:flex-row flex-col md:px-0 px-10">
                         <div className="flex items-center gap-6 w-full md:w-max">
@@ -50,8 +60,8 @@ const Plan = () => {
                             </ul>
                         </div>
                     </div>
-                    <h4 className='text-[#6a796a] md:px-0 px-10 mt-4 mb-1 leading-tight text-sm'>Description ~</h4>
-                    <p className='md:w-[60%] md:px-0 px-10 leading-tight text-sm'>{plan.plandesc}</p>
+                    <h4 className='text-[#6a796a] md:px-0 md:text-2xl px-10 mt-4 mb-1 leading-tight text-sm'>Description ~</h4>
+                    <p className='md:w-[60%] md:px-0 px-10 md:text-lg md:leading-6 leading-tight text-sm'>{plan.plandesc}</p>
                     <div className="btns px-10 md:px-0 flex items-center w-full md:justify-start justify-between gap-4 md:mt-4 mt-10">
                         <NavLink to={`/update/${id}`}>
 
@@ -62,17 +72,17 @@ const Plan = () => {
                 </div>
 
             </div>
-            <div className="desc md:px-20 px-10 md:mt-20 md:pb-0 pb-10">
-                <h1 className='text-[#6a796a] text-2xl mb-4 border-b border-[#6a796a] '>Planting Instruction</h1>
+            <div className="desc md:px-20 px-10 md:mt-20  pb-10">
+                <h1 className='text-[#6a796a] text-2xl md:text-4xl md:pb-4 mb-4 border-b border-[#6a796a] '>Planting Instruction</h1>
                 <ul className=' list-decimal pl-4'>
                     {plan.planinstructions.split('.').map((instruct, i, len) => {
                         return (
-                            i != len.length - 1 ? <li key={i}>{instruct}.</li> : ''
+                            i != len.length - 1 ? <li className=' md:text-lg'  key={i}>{instruct}.</li> : ''
                         )
                     })}
                 </ul>
-                <h1 className='text-[#6a796a] text-2xl mb-4 mt-8 border-b border-[#6a796a] '>Care Tips</h1>
-                <h1 className=''>{plan.plantips}</h1>
+                <h1 className='text-[#6a796a] text-2xl md:text-4xl md:pb-4 mb-4 md:mt-10 mt-8 border-b border-[#6a796a] '>Care Tips</h1>
+                <h1 className=' md:text-lg md:leading-6'>{plan.plantips}</h1>
 
 
             </div>
