@@ -124,7 +124,7 @@ const Update = () => {
 
                 <div className="w-full text-right">
                     <button className="rounded-md text-xl bg-[#1b5191] text-white py-2 px-5 hover:bg-green-700 duration-200">
-                        Publish Plan &nbsp; &#8594;
+                        Update Plan &nbsp; &#8594;
                     </button>
                 </div>
             </form>

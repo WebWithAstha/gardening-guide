@@ -7,17 +7,11 @@ const gardenPlanSlice = createSlice({
     },
     reducers: {
 
-        add: (state, action) => {
-            state.plans.push(action.payload)
-        },
-        update: (state, action) => {
+        load: (state, action) => {
             state.plans = action.payload
-            },
-            remove: (state, action) => {
-            state.plans = action.payload
-        },
+        }
     }
 })
 
 export default gardenPlanSlice.reducer
-export const { add, update, remove } = gardenPlanSlice.actions
+export const {load } = gardenPlanSlice.actions

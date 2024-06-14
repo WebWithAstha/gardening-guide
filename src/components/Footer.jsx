@@ -2,7 +2,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-            <footer className='md:px-20 py-10 w-full border-t-4 md:rounded-t-[14rem] rounded-t-3xl overflow-hidden'>
+            <footer className='md:px-20 py-10 w-full border-t-4 md:rounded-t-[8rem] rounded-t-[5rem] overflow-hidden'>
                 <div className="top md:flex md:flex-row flex-col md:items-end items-center justify-between w-full">
                     <div className="top-lft flex md:flex-row flex-col items-center md:items-start md:gap-20 gap-8">
 
