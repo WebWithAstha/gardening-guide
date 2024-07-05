@@ -56,7 +56,7 @@ const Plan = () => {
                         </div>
                     </div>
                     <h1 className='text-[#6a796a] md:px-0 md:text-2xl px-10 mt-4 mb-1 leading-tight text-sm'>Description ~</h1>
-                    <p className='md:w-[60%] md:px-0 px-10 md:text-lg md:leading-6 leading-tight text-sm'>{plan.desc?plan.plandesc:'No description provided.'}</p>
+                    <p className='md:w-[60%] md:px-0 px-10 md:text-lg md:leading-6 leading-tight text-sm'>{plan.plandesc?plan.plandesc:'No description provided.'}</p>
                     <div className="btns px-10 md:px-0 flex items-center w-full md:justify-start justify-between gap-4 md:mt-4 mt-10">
                         <NavLink to={`/update/${id}`}>
 
@@ -70,7 +70,7 @@ const Plan = () => {
             <div className="desc md:px-20 px-10 md:mt-20  pb-10">
                 <h1 className='text-[#6a796a] text-2xl md:text-4xl md:pb-4 mb-4 border-b border-[#6a796a] '>Planting Instruction</h1>
                 <ul className=' list-decimal pl-4'>
-                    {plan.instructions ? plan.planinstructions.split('.').map((instruct, i, len) => {
+                    {plan.planinstructions ? plan.planinstructions.split('.').map((instruct, i, len) => {
                         return (
                             i != len.length - 1 ? <li className=' md:text-lg'  key={i}>{instruct}.</li> : ''
                         )
