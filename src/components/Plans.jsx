@@ -21,7 +21,7 @@ const Plans = () => {
                     )
                 }): 
                
-                <div className='text-center text-[#919591] font-black text-3xl'>Loading <i className="ri-emotion-happy-line"></i></div>
+                <div className='text-center text-[#5a5e72] font-semibold text-2xl'>No plans yet</div>
 
 
                 }
