@@ -8,7 +8,7 @@ const Home = () => {
         <>
             <Layout/>
             <div className='w-full pb-10'>
-                <h1 className='text-center text-4xl font-bold md:my-20 my-10'>Plans So Far</h1>
+                <h1 className='text-center md:text-4xl text-2xl font-bold md:my-16 my-10'>Plans So Far</h1>
                 <Plans />
             </div>
             <Footer />

@@ -17,9 +17,9 @@ const Footer = () => {
                         </div>
                         <div className="">
                             <h1 className='font-semibold text-lg mb-4 md:text-start text-center'>Let Us Know</h1>
-                            <div className="flex border-[1.7px] border-black w-max rounded-lg">
+                            <div className="flex border-[1.7px] border-black w-max rounded-lg overflow-hidden">
                                 <input className='rounded-lg px-2 outline-none' type="text" placeholder='Enter Query' />
-                                <button className='px-4 py-2 text-sm bg-black text-white border-l-0 rounded-r-lg uppercase font-bold'>Send</button>
+                                <button className='px-4 py-2 bg-black text-white hover:bg-[#babcb9] hover:text-black font-semibold uppercase duration-300'>Send</button>
                             </div>
                             <div className="flex gap-4 items-center md:justify-start justify-center mt-4">
                                 <i className="ri-instagram-line border-[1.7px] border-black hover:bg-[#919591] hover:text-white hover:border-[#919591] transition-all duration-300 text-md font-black px-3 py-2 rounded-full "></i>
@@ -28,7 +28,7 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
-                    <h1 className='text-center md:text-start md:pt-0 pt-6 text-[12vw] leading-tight '>GGenius</h1>
+                    <h1 className='text-center md:text-start md:pt-0 pt-6 text-[10vw] md:text-[8vw] leading-tight '>GardenPlaner</h1>
                 </div>
                 <div className="btm text-center text-xs mt-8">This is a website made by Astha Lodhi. Thanks for support.</div>
 
