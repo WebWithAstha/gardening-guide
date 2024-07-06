@@ -1,7 +1,6 @@
 import { load} from '../reducers/gardenPlanSlice'
 
 export const asyncAdd = (newPlan) => (dispatch, getState) => {
-    console.log([...getState().gardenPlanSlice.plans])
     const copyPlans = [...getState().gardenPlanSlice.plans]
     copyPlans.push(newPlan)
     dispatch(load(copyPlans))

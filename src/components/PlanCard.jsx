@@ -1,14 +1,10 @@
-import React, { useContext, useState } from 'react'
 import a from "../assets/images/45-degrees.png"
-import { plancontext } from '../Contexts/PlanContent'
 import { useSelector } from 'react-redux'
 
 
 const PlanCard = ({planid}) => {
-    // const [plans,setplans] = useContext(plancontext)
     const {plans} = useSelector(store=>store.gardenPlanSlice)
     const plan = plans.find(plan=>plan.id === planid)
-    console.log(plan)
     
     return ( plan ? <div className="plan border-2 hover:bg-[#babcb9] hover:border-[#babcb9] transition-all duration-500 border-zinc-400 cursor-pointer shrink-0 w-72 h-96  overflow-hidden p-4 relative">
     <div className="img w-full h-full overflow-hidden relative">
